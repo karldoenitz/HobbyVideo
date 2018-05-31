@@ -3,6 +3,7 @@ package models
 import (
     "github.com/astaxie/beego/orm"
     _ "github.com/mattn/go-sqlite3"
+	"fmt"
 )
 
 type VideoSource struct {
@@ -34,4 +35,24 @@ func init() {
 
     // create table
     orm.RunSyncdb("default", false, true)
+}
+
+func GetVideoByName(name string) (lists []orm.ParamsList) {
+	o := orm.NewOrm()
+	num, err := o.QueryTable("video_source").Filter("Video_Name__contains", name).ValuesList(&lists)
+	if err == nil {
+		fmt.Printf("Result Nums: %d\n", num)
+		return lists
+	}
+	return lists
+}
+
+func GetVideosInFront() (lists []orm.ParamsList) {
+	o := orm.NewOrm()
+	num, err := o.QueryTable("video_source").Limit(9).ValuesList(&lists)
+	if err == nil {
+		fmt.Printf("Result Nums: %d\n", num)
+		return lists
+	}
+	return lists
 }

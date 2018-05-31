@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
+	"HobbyVideo/models"
 )
 
 type VideoController struct {
@@ -17,6 +18,14 @@ type ListController struct {
 }
 
 func (c *ListController) Get()  {
-
+	videos := models.GetVideosInFront()
 	c.TplName = "frontPage.html"
+}
+
+type SearchController struct {
+	beego.Controller
+}
+
+func (c *SearchController) Get()  {
+
 }
